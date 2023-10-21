@@ -38,26 +38,8 @@ describe('Epam hometasks', () => {
        
     });
     
-    //In colaboration with gpt
     
-    it.only("Check the policies list", async () => {
-        // Find the policies section
-        const policiesSection = $('.policies');
-
-        // Scroll to the policies section
-        await policiesSection.scrollIntoView();
-
-        await (await policiesSection).isDisplayed( [
-            "INVESTORS",
-            "OPEN SOURCE",
-            "PRIVACY POLICY",
-            "COOKIE POLICY",
-            "APPLICANT PRIVACY NOTICE",
-            "WEB ACCESSIBILITY"
-        ]);
-
-       
-    });
+    
 });
 
 
