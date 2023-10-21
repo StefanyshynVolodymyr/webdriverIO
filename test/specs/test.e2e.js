@@ -1,37 +1,65 @@
 import { expect, browser, $ } from '@wdio/globals'
 
-describe('My Login application', () => {
-    
-    // it('should login with valid credentials', async () => {
-    //     await browser.url(`https://the-internet.herokuapp.com/login`)
-
-    //     await $('#username').setValue('tomsmith')
-    //     await $('#password').setValue('SuperSecretPassword!')
-    //     await $('button[type="submit"]').click()
-
-    //     await expect($('#flash')).toBeExisting()
-    //     await expect($('#flash')).toHaveTextContaining(
-    //         'You logged into a secure area!')
-    // })
-
-    
-    // it('should login with invalid credentials', async () => {
-    //     await browser.url(`https://the-internet.herokuapp.com/login`)
-
-    //     await $('#username').setValue('invalid_tomsmith')
-    //     await $('#password').setValue('invalid_SuperSecretPassword!')
-    //     await $('button[type="submit"]').click()
-
-  
-    //     await expect($('#flash')).toHaveTextContaining(
-    //         'Your username is invalid!')
-    // })  
-
-    it("Check the title is correct", async () => {
-        await browser.url("https://epam.com")
+describe('Epam hometasks', () => {
+    before(() => {
+        browser.url("https://epam.com");
+    });
+    //Me
+     it("Check the title is correct", async () => {
         const pageTitle = await browser.getTitle();
-
+        
         expect(pageTitle).toEqual("EPAM | Software Engineering & Product Development Services")
     });
+
+    //Me
+    it("Check theme is changed to opposite", async () => {
+        await $('.header__content > .theme-switcher-ui > .theme-switcher').click()
+
+        await expect($('.light-mode').isExisting())
+
+    });
     
-})
+    //Me and 30% gpt
+    it("Check that allow to change language to UA", async () => {
+       await $('.location-selector-ui-23').click();
+       await browser.setTimeout({ 'implicit': 10000 });
+       await $('.location-selector__title').isDisplayed();
+       await $('li:nth-of-type(6) > .location-selector__link').click();
+       
+       await browser.waitUntil(
+        async () => {
+            const currentURL = await browser.getUrl();
+            return currentURL === "https://careers.epam.ua/";
+        },
+        {
+            timeout: 10000, // Adjust the timeout as needed
+            timeoutMsg: "URL did not change to 'https://careers.epam.ua/' within the expected time.",
+        }) 
+       
+    });
+    
+    //In colaboration with gpt
+    
+    it.only("Check the policies list", async () => {
+        // Find the policies section
+        const policiesSection = $('.policies');
+
+        // Scroll to the policies section
+        await policiesSection.scrollIntoView();
+
+        await (await policiesSection).isDisplayed( [
+            "INVESTORS",
+            "OPEN SOURCE",
+            "PRIVACY POLICY",
+            "COOKIE POLICY",
+            "APPLICANT PRIVACY NOTICE",
+            "WEB ACCESSIBILITY"
+        ]);
+
+       
+    });
+});
+
+
+    
+
